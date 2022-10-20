@@ -13,8 +13,6 @@ const converter = ()=>{
         const request = await fetch(url, {})
         .then(Response => Response.json())
         .then((data)=>{
-            console.log(data)
-
             if(select1.value === "USD" && select2.value === "BRL"){
                 calculo = valor.value * data.USDBRL.ask;
 
@@ -27,15 +25,26 @@ const converter = ()=>{
             }else if(select1.value === "BRL" && select2.value === "EUR"){
                 calculo = valor.value * data.BRLEUR.ask;
 
+            }else if(select1.value === "USD" && select2.value === "EUR"){
+                calculo = valor.value * data.USDEUR.ask;
+
+            }else if(select1.value === "EUR" && select2.value === "USD"){
+                calculo = valor.value * data.EURUSD.ask;
+
             }
+
         })
-        .catch(error => error)
+        .catch((erro)=>{
+            alert(erro);
+        })
+
+        
         res.innerText = calculo.toFixed(2);
         res.classList.add("active");
     }
-
     apiConverte();
 }
+
 
 export const Container = ()=>{
     return(
@@ -72,4 +81,5 @@ export const Container = ()=>{
             <div className="resultado"></div>
         </div>
     );
+    
 }
